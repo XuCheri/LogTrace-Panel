@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__list_directory_with_sizes",
+      "mcp__filesystem__list_directory",
+      "Bash(dir:*)",
+      "Bash(git -C \"C:\\Users\\11564\\Desktop\\codeWork\\LogTrace-Panel\" log --oneline -10)",
+      "Bash(git -C \"C:\\Users\\11564\\Desktop\\codeWork\\LogTrace-Panel\" status)",
+      "Bash(git -C \"C:\\Users\\11564\\Desktop\\codeWork\\LogTrace-Panel\" branch -a)",
+      "Bash(node scripts/generate-icons.js:*)"
+    ]
+  }
+}

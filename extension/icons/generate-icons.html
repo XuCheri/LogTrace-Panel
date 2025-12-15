@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Icons</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #1e1e1e; color: #fff; }
+    canvas { border: 1px solid #333; margin: 10px; }
+    .container { display: flex; gap: 20px; flex-wrap: wrap; }
+    button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    a { color: #4ec9b0; }
+  </style>
+</head>
+<body>
+  <h1>LogTrace Panel - Icon Generator</h1>
+  <p>Right-click on each canvas and "Save image as..." to save the icons.</p>
+
+  <div class="container">
+    <div>
+      <h3>16x16</h3>
+      <canvas id="icon16" width="16" height="16"></canvas>
+    </div>
+    <div>
+      <h3>48x48</h3>
+      <canvas id="icon48" width="48" height="48"></canvas>
+    </div>
+    <div>
+      <h3>128x128</h3>
+      <canvas id="icon128" width="128" height="128"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function drawIcon(canvasId, size) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+
+      // Background
+      ctx.fillStyle = '#1e1e1e';
+      ctx.fillRect(0, 0, size, size);
+
+      // Border
+      ctx.strokeStyle = '#3c3c3c';
+      ctx.lineWidth = size * 0.05;
+      ctx.strokeRect(size * 0.1, size * 0.1, size * 0.8, size * 0.8);
+
+      // Log lines
+      ctx.fillStyle = '#4ec9b0';
+      const lineHeight = size * 0.12;
+      const startY = size * 0.25;
+      const startX = size * 0.2;
+      const lineWidth = size * 0.6;
+
+      for (let i = 0; i < 4; i++) {
+        const y = startY + i * (lineHeight + size * 0.08);
+        const w = lineWidth * (0.7 + Math.random() * 0.3);
+
+        // Level indicator
+        ctx.fillStyle = ['#569cd6', '#9cdcfe', '#dcdcaa', '#4ec9b0'][i];
+        ctx.fillRect(startX, y, size * 0.08, lineHeight);
+
+        // Line content
+        ctx.fillStyle = '#808080';
+        ctx.fillRect(startX + size * 0.12, y, w - size * 0.12, lineHeight);
+      }
+
+      // Terminal cursor blink
+      ctx.fillStyle = '#0e639c';
+      ctx.fillRect(size * 0.75, size * 0.7, size * 0.08, lineHeight);
+    }
+
+    drawIcon('icon16', 16);
+    drawIcon('icon48', 48);
+    drawIcon('icon128', 128);
+
+    // Auto-download links
+    document.querySelectorAll('canvas').forEach(canvas => {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = canvas.id + '.png';
+      link.textContent = 'Download ' + canvas.id + '.png';
+      link.style.display = 'block';
+      canvas.parentElement.appendChild(link);
+    });
+  </script>
+</body>
+</html>

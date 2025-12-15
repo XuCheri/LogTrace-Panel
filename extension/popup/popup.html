@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LogTrace 日志面板</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="panel">
+    <!-- 标题栏 -->
+    <header class="header">
+      <div class="header-title">
+        <span class="logo">&#9632;</span>
+        <span>LogTrace 日志面板</span>
+      </div>
+      <div class="header-actions">
+        <button id="btn-settings" class="icon-btn" title="设置">&#9881;</button>
+      </div>
+    </header>
+
+    <!-- 设置面板（默认隐藏） -->
+    <section id="settings-panel" class="settings-panel hidden">
+      <div class="settings-row">
+        <label for="server-url">中继服务器:</label>
+        <input type="text" id="server-url" placeholder="http://localhost:3000">
+      </div>
+      <div class="settings-row">
+        <button id="btn-save-settings" class="btn btn-sm">保存</button>
+        <button id="btn-close-settings" class="btn btn-sm btn-secondary">关闭</button>
+      </div>
+    </section>
+
+    <!-- 连接控制 -->
+    <section class="control-bar">
+      <div class="control-row">
+        <select id="stream-select" class="stream-select">
+          <option value="">-- 选择数据流 --</option>
+        </select>
+        <button id="btn-connect" class="btn">连接</button>
+        <button id="btn-create" class="btn btn-secondary" title="创建数据流">+</button>
+      </div>
+      <div class="status-bar">
+        <span id="connection-status" class="status-indicator disconnected">未连接</span>
+        <span id="node-count" class="node-count">0 个节点</span>
+      </div>
+    </section>
+
+    <!-- 创建/加入数据流模态框 -->
+    <section id="modal-stream" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="modal-title">创建数据流</h3>
+        <div class="form-group">
+          <label for="stream-name">数据流名称:</label>
+          <input type="text" id="stream-name" placeholder="prod-cluster-01">
+        </div>
+        <div class="form-group" id="stream-id-group" style="display: none;">
+          <label for="stream-id">数据流 ID:</label>
+          <input type="text" id="stream-id" placeholder="输入数据流 ID">
+        </div>
+        <div class="form-group">
+          <label for="stream-password">访问密钥:</label>
+          <input type="password" id="stream-password" placeholder="输入访问密钥">
+        </div>
+        <div class="modal-actions">
+          <button id="btn-modal-confirm" class="btn">创建</button>
+          <button id="btn-modal-cancel" class="btn btn-secondary">取消</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 过滤器 -->
+    <section class="filter-bar">
+      <input type="text" id="filter-input" class="filter-input" placeholder="过滤日志...">
+      <select id="level-filter" class="level-filter">
+        <option value="">全部</option>
+        <option value="INFO">INFO</option>
+        <option value="DEBUG">DEBUG</option>
+        <option value="WARN">WARN</option>
+        <option value="ERROR">ERROR</option>
+        <option value="TRACE">TRACE</option>
+      </select>
+      <button id="btn-clear" class="btn btn-sm btn-secondary">清空</button>
+    </section>
+
+    <!-- 日志列表 -->
+    <section id="log-container" class="log-container">
+      <div class="log-empty">
+        <p>暂无日志</p>
+        <p class="hint">连接数据流后即可接收日志</p>
+      </div>
+    </section>
+
+    <!-- 输入区域 -->
+    <section class="input-bar">
+      <input type="text" id="message-input" class="message-input" placeholder="输入追踪数据..." disabled>
+      <button id="btn-send" class="btn" disabled>推送</button>
+    </section>
+  </div>
+
+  <!-- Socket.IO 客户端 (本地) -->
+  <script src="../lib/socket.io.min.js"></script>
+  <script src="../lib/crypto.js"></script>
+  <script src="../lib/socket.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
